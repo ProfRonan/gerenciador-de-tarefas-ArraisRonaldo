@@ -11,6 +11,8 @@ lista_de_tarefas: list[dict[str]] = [
 
 
 def adicionar_tarefa(prioridade: bool, tarefa: str):
+    dicti = {"prioridade" : prioridade, "tarefa": tarefa}
+    lista_de_tarefas.append(dicti)
     """
     Adiciona uma tarefa na lista de tarefas
     Lança exceções caso a prioridade seja inválida ou a tarefa já exista
@@ -28,6 +30,10 @@ def adicionar_tarefa(prioridade: bool, tarefa: str):
 
 
 def remove_tarefas(índices: tuple[int]):
+    for índice in reversed(índices):
+        lista_de_tarefas.pop(índice)
+        
+
     """
     Remove várias tarefas da lista de tarefas de uma vez, dado uma tupla de índices
     Lança exceções caso a tarefa não exista
@@ -57,6 +63,14 @@ def encontra_tarefa(tarefa: str) -> int:
 
 
 def ordena_por_prioridade():
+    def pega_texto(tarefa):
+        if tarefa["prioridade"]==True:
+            prefixo = "AAA-"
+        else:
+            prefixo = "ZZZ-"
+        return prefixo + tarefa["tarefa"]
+        
+    lista_de_tarefas.sort(key=pega_texto)
     """
     Ordena a lista de tarefas por prioridade com as tarefas prioritárias no
     início da lista, seguidas pelas tarefas não prioritárias.
