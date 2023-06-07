@@ -11,6 +11,12 @@ lista_de_tarefas: list[dict[str]] = [
 
 
 def adicionar_tarefa(prioridade: bool, tarefa: str):
+    if prioridade not in [True, False]:
+        raise ValueError("Prioridade inválida")
+    for item in lista_de_tarefas:
+        if item["tarefa"] == tarefa:
+          raise ValueError("Tarefa já existe")
+        
     dicti = {"prioridade" : prioridade, "tarefa": tarefa}
     lista_de_tarefas.append(dicti)
     """
@@ -26,12 +32,13 @@ def adicionar_tarefa(prioridade: bool, tarefa: str):
     # do tipo ValueError com a mensagem "Prioridade inválida"
     # Caso a tarefa já exista na lista, levante uma exceção do tipo ValueError
     # com a mensagem "Tarefa já existe"
-    raise NotImplementedError("Adicionar tarefas não implementado")
-
-
 def remove_tarefas(índices: tuple[int]):
     for índice in reversed(índices):
         lista_de_tarefas.pop(índice)
+
+        for índice in reversed(índices):
+            if índice < 0 or índice >= len(índices):
+                raise ValueError("Tarefa não existe")
         
 
     """
@@ -45,7 +52,6 @@ def remove_tarefas(índices: tuple[int]):
     # TODO: coloque o código aqui para remover um tarefa na lista
     # Caso a tarefa não exista na lista, levante uma exceção do tipo ValueError
     # com a mensagem "Tarefa não existe"
-    raise NotImplementedError("Remover tarefas não implementado")
 
 
 def encontra_tarefa(tarefa: str) -> int:
@@ -82,7 +88,6 @@ def ordena_por_prioridade():
     # não prioritárias.
     # As tarefas prioritárias devem ser ordenadas por ordem alfabética e as
     # tarefas não prioritárias devem ser ordenadas por ordem alfabética.
-    raise NotImplementedError("Ordenar tarefas não implementado")
 
 
 def get_lista_de_tarefas():
@@ -95,3 +100,4 @@ def get_lista_de_tarefas():
         prioridade = tarefa["prioridade"]
         texts.append(f"{'*' if prioridade else ''} {texto}")
     return tuple(texts)
+
