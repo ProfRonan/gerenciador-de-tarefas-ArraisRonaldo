@@ -10,90 +10,42 @@ lista_de_tarefas: list[dict[str]] = [
 ]
 
 
+lista_de_tarefas: list[dict[str]] = []
+
 def adicionar_tarefa(prioridade: bool, tarefa: str):
     if prioridade not in [True, False]:
         raise ValueError("Prioridade inválida")
     for item in lista_de_tarefas:
         if item["tarefa"] == tarefa:
-          raise ValueError("Tarefa já existe")
-        
-    dicti = {"prioridade" : prioridade, "tarefa": tarefa}
+            raise ValueError("Tarefa já existe")
+
+    dicti = {"prioridade": prioridade, "tarefa": tarefa}
     lista_de_tarefas.append(dicti)
-    """
-    Adiciona uma tarefa na lista de tarefas
-    Lança exceções caso a prioridade seja inválida ou a tarefa já exista
 
-    Args:
-        prioridade (bool): True se a tarefa tem prioridade alta, False caso contrário
-        tarefa (str): string que representa a tarefa
-    """
-    # TODO: coloque o código aqui para adicionar um tarefa na lista
-    # Caso a prioridade não seja True ou False, levante uma exceção
-    # do tipo ValueError com a mensagem "Prioridade inválida"
-    # Caso a tarefa já exista na lista, levante uma exceção do tipo ValueError
-    # com a mensagem "Tarefa já existe"
-def remove_tarefas(índices: tuple[int]):
-    for índice in reversed(índices):
-        lista_de_tarefas.pop(índice)
-
-        for índice in reversed(índices):
-            if índice < 0 or índice >= len(índices):
-                raise ValueError("Tarefa não existe")
-        
-
-    """
-    Remove várias tarefas da lista de tarefas de uma vez, dado uma tupla de índices
-    Lança exceções caso a tarefa não exista
-
-    Args:
-        índices (tuple[int]): tupla de inteiros que representam os índices das tarefas
-                             que devem ser removidas da lista.
-    """
-    # TODO: coloque o código aqui para remover um tarefa na lista
-    # Caso a tarefa não exista na lista, levante uma exceção do tipo ValueError
-    # com a mensagem "Tarefa não existe"
-
+def remove_tarefas(indices: tuple[int]):
+    for indice in reversed(indices):
+        if indice < 0 or indice >= len(lista_de_tarefas):
+            raise ValueError("Tarefa não existe")
+        lista_de_tarefas.pop(indice)
 
 def encontra_tarefa(tarefa: str) -> int:
-    """
-    Encontra o índice de uma tarefa na lista de tarefas
-    Lança exceções caso a tarefa não exista
+    for i, item in enumerate(lista_de_tarefas):
+        if item["tarefa"] == tarefa:
+            return i
 
-    Args:
-        tarefa (str): string que representa a tarefa
-    """
-    # TODO: coloque o código aqui para encontrar um tarefa na lista
-    # Caso a tarefa não exista na lista, levante uma exceção do tipo ValueError
-    # com a mensagem "Tarefa não existe"
-    raise NotImplementedError("Encontrar tarefas não implementado")
-
+    raise ValueError("Tarefa não existe")
 
 def ordena_por_prioridade():
     def pega_texto(tarefa):
-        if tarefa["prioridade"]==True:
+        if tarefa["prioridade"]:
             prefixo = "AAA-"
         else:
             prefixo = "ZZZ-"
         return prefixo + tarefa["tarefa"]
-        
-    lista_de_tarefas.sort(key=pega_texto)
-    """
-    Ordena a lista de tarefas por prioridade com as tarefas prioritárias no
-    início da lista, seguidas pelas tarefas não prioritárias.
-    As tarefas prioritárias devem ser ordenadas por ordem alfabética e as
-    tarefas não prioritárias devem ser ordenadas por ordem alfabética.
-    """
-    # TODO: coloque o código aqui para ordenar a lista de tarefas por prioridade
-    # com as tarefas prioritárias no início da lista, seguidas pelas tarefas
-    # não prioritárias.
-    # As tarefas prioritárias devem ser ordenadas por ordem alfabética e as
-    # tarefas não prioritárias devem ser ordenadas por ordem alfabética.
 
+    lista_de_tarefas.sort(key=pega_texto)
 
 def get_lista_de_tarefas():
-    """
-    Retorna somente o texto das tarefas da lista de tarefas
-    """
     texts = []
     for tarefa in lista_de_tarefas:
         texto = tarefa["tarefa"]
